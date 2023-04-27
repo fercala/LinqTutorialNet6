@@ -33,8 +33,11 @@ namespace Exercises
         public static IEnumerable<string> GetStudentMarksInfo(
             IEnumerable<Student> students)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return from student in students
+                   where student.Marks != null
+                   from mark in student.Marks
+                   orderby student.Name, mark
+                   select $"{student.Name}: {mark}";
         }
 
         //Coding Exercise 2
@@ -63,8 +66,11 @@ namespace Exercises
                 IEnumerable<int> numbers1,
                 IEnumerable<int> numbers2)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return from number1 in numbers1
+                   from number2 in numbers2
+                   where
+                    number1 + number2 < 100
+                   select new Tuple<int, int>(number1, number2);
         }
 
         //Refactoring challenge
@@ -73,8 +79,11 @@ namespace Exercises
             GetDivisorsInfo_Refactored(
                 IEnumerable<int> numbers)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return from number in numbers
+                   from divisor in GetDivisors(number)
+                   orderby number, divisor
+                   select $"Number {number} is " +
+                   $"divisible by {divisor}";
         }
 
         //do not modify this method

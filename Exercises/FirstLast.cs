@@ -19,8 +19,7 @@ namespace Exercises
          */
         public static string FindFirstNameInTheCollection(IEnumerable<string> words)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return words.FirstOrDefault(x => x.Length >= 2 && char.ToUpper(x[0]) + x.Substring(1).ToLower() == x);
         }
 
         //Coding Exercise 2
@@ -32,16 +31,14 @@ namespace Exercises
          */
         public static Person GetYoungest(IEnumerable<Person> people)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return people.OrderBy(p => p.DateOfBirth).LastOrDefault();
         }
 
         //Refactoring challenge
         //TODO implement this method
         public static Person FindOwnerOf_Refactored(Pet pet, IEnumerable<Person> people)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return people.FirstOrDefault(x => x.Pets.Contains(pet));
         }
 
         //do not modify this method

@@ -25,8 +25,15 @@ namespace Exercises
          */
         public static IEnumerable<int> GetNumbers(IEnumerable<object> objects)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return objects.OfType<int>().Concat(
+                 objects.OfType<string>()
+                 .Select(text => {
+                     int result;
+                     return int.TryParse(text, out result) ? result : (int?)null;
+                 })
+                 .Where(nullableNumber => nullableNumber != null)
+                 .Select(nullableNumber => nullableNumber.Value))
+                 .OrderBy(number => number);
         }
 
         //Coding Exercise 2
@@ -53,16 +60,43 @@ namespace Exercises
          */
         public static IEnumerable<Person> PeopleFromString(string input)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return input.Split(';')
+                .Select(personData =>
+                {
+                    try
+                    {
+                        var split = personData.Split(',');
+                        var fullName = split[0].Split(' ');
+                        var firstName = fullName[0];
+                        var lastName = fullName[1];
+                        var dateOfBirth = DateTime.Parse(split[1]);
+
+                        return new Person
+                        {
+                            FirstName = firstName,
+                            LastName = lastName,
+                            DateOfBirth = dateOfBirth
+                        };
+                    }
+                    catch (Exception)
+                    {
+                        return null;
+                    }
+                })
+                .Where(person => person != null);
         }
 
         //Refactoring challenge
         //TODO implement this method
         public static TimeSpan TotalDurationOfSongs_Refactored(string allSongsDuration)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return string.IsNullOrEmpty(allSongsDuration) ?
+                new TimeSpan() :
+                TimeSpan.FromSeconds(
+                allSongsDuration.Split(',')
+                .Select(songDurationAsString => TimeSpan.ParseExact(
+                    songDurationAsString, @"m\:ss", null))
+                .Sum(timeSpan => timeSpan.TotalSeconds));
         }
 
         //do not modify this method

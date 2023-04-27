@@ -29,8 +29,7 @@ namespace Exercises
         public static IEnumerable<Student> GetScholarshipCandidates(
             IEnumerable<Student> students)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return students.Where(e => (e.Marks != null && e.Marks.Any() ? e.Marks.Average() : 0) > 4.6f);
         }
 
         //Coding Exercise 2
@@ -55,8 +54,7 @@ namespace Exercises
         public static IEnumerable<string> GetProperlyIndexedWords(
             IEnumerable<string> words)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return words.Where((w, index) => w.StartsWith((index + 1).ToString()));
         }
 
         //Refactoring challenge
@@ -64,8 +62,7 @@ namespace Exercises
         public static IEnumerable<Person> GetMultipleFishOwners_Refactored(
             IEnumerable<Person> people)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return people.Where(p => p.Pets.Count(pet => pet.PetType == PetType.Fish) > 1);
         }
 
         //do not modify this method

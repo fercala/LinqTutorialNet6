@@ -23,8 +23,10 @@ namespace Exercises
         public static bool IsTheNumberAtIndexTheLargest(
             IEnumerable<int> numbers, int index)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            if (index > numbers.Count() - 1 || index < 0)
+                return false;
+
+            return numbers.ElementAt(index) == numbers.Max();
         }
 
         //Coding Exercise 2
@@ -39,16 +41,22 @@ namespace Exercises
         public static string FormatPetDataAtIndex(
             IEnumerable<Pet> pets, int index)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            string result = $"Pet data is missing for index {index}";
+            Pet pet = null;
+            if (index >= 0 && index < pets.Count())
+                pet = pets.ElementAt(index);
+
+            if (pet != null)
+                result = $"Pet name: {pet.Name}";
+
+            return result;
         }
 
         //Refactoring challenge
         //TODO implement this method
         public static bool IsEmptyAtIndex_Refactored(IEnumerable<string> words, int index)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return string.IsNullOrEmpty(words.ElementAtOrDefault(index));
         }
 
         //do not modify this method

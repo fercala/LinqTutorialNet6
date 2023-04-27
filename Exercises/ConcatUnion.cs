@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Exercises
 {
@@ -26,8 +27,11 @@ namespace Exercises
         public static IEnumerable<News> SelectRecentAndImportant(
             IEnumerable<News> newsCollection)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return newsCollection
+            .OrderByDescending(news => news.PublishingDate)
+            .Take(3)
+            .Concat(newsCollection.Where(news => news.Priority == Priority.High))
+            .Distinct();
         }
 
         //Coding Exercise 2
@@ -49,8 +53,13 @@ namespace Exercises
          */
         public static string CleanWord(string word)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            var wordAsCharArray = word.ToCharArray();
+
+            return new string(wordAsCharArray
+                .Where(character => char.IsLetter(character))
+                .Concat(
+                    wordAsCharArray.Where(character =>
+                    !char.IsLetter(character)).Distinct()).ToArray());
         }
 
         //Refactoring challenge
@@ -58,10 +67,14 @@ namespace Exercises
         public static IEnumerable<int> GetPerfectSquares_Refactored(
             IEnumerable<int> numbers1, IEnumerable<int> numbers2)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return numbers1
+                 .Where(HasNaturalSquareRoot)
+                 .Concat(numbers2
+                     .Where(HasNaturalSquareRoot))
+                 .Distinct()
+                 .OrderBy(number => number);
         }
-
+        static bool HasNaturalSquareRoot(int number) => Math.Sqrt(number) % 1 == 0;
         //do not modify this method
         public static IEnumerable<int> GetPerfectSquares(IEnumerable<int> numbers1, IEnumerable<int> numbers2)
         {

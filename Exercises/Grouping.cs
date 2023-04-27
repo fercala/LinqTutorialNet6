@@ -29,8 +29,14 @@ namespace Exercises
          */
         public static char? GetTheMostFrequentCharacter(string text)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return string.IsNullOrEmpty(text) ?
+                (char?)null :
+                text
+                .ToLower()
+                .GroupBy(character => character)
+                .OrderByDescending(characters => characters.Count())
+                .First()
+                .Key;
         }
 
         //Coding Exercise 2
@@ -53,16 +59,22 @@ namespace Exercises
          */
         public static PetType? FindTheHeaviestPetType(IEnumerable<Pet> pets)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return pets.Any() ?
+               pets.GroupBy(pet => pet.PetType)
+               .OrderBy(group => group.Average(pet => pet.Weight))
+               .Last().Key :
+               (PetType?)null;
         }
 
         //Refactoring challenge
         //TODO implement this method
         public static IEnumerable<string> CountPets_Refactored(string petsData)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return string.IsNullOrEmpty(petsData) ?
+                 Enumerable.Empty<string>() :
+                 petsData.Split(',')
+                 .GroupBy(word => word)
+                 .Select(group => $"{group.Key}:{group.Count()}");
         }
 
         //do not modify this method

@@ -38,8 +38,22 @@ namespace Exercises
              IEnumerable<Person> people,
              IEnumerable<House> houses)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return people.GroupJoin(
+                houses,
+                person => person.Id,
+                house => house.OwnerId,
+                (person, personHouses) => new
+                {
+                    Owner = person,
+                    Houses = personHouses
+                })
+                .SelectMany(ownerHouses => ownerHouses.Houses.DefaultIfEmpty(),
+                (ownerHouses, singleHouse) => $"Person: {ownerHouses.Owner} " +
+                $"owns {GetHouseNameOrDefault(singleHouse)}");
+        }
+        public static string GetHouseNameOrDefault(House house)
+        {
+            return house == null ? "no house" : house.Adderss;
         }
 
         //Coding Exercise 2

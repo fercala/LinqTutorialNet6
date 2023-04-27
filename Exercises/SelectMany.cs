@@ -17,8 +17,9 @@ namespace Exercises
         public static IEnumerable<string> BuildCartesianProduct(
             HashSet<int> numbers)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return numbers.SelectMany(
+               number1 => numbers, (number1, number2) =>
+               $"{number1},{number2}");
         }
 
         //Coding Exercise 2
@@ -53,8 +54,13 @@ namespace Exercises
         public static IEnumerable<string> BestMarksAndStudents(
             IEnumerable<Student> students)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return students.SelectMany(student => student.Marks,
+                (student, mark) => new { Student = student, Mark = mark })
+                .OrderByDescending(studentMarkPair => studentMarkPair.Mark)
+                .ThenBy(studentMarkPair => studentMarkPair.Student.Name)
+                .Take(5)
+                .Select(studentMarkPair =>
+                    $"{studentMarkPair.Student.Name}: {studentMarkPair.Mark}");
         }
 
         //Refactoring challenge
@@ -62,8 +68,18 @@ namespace Exercises
         public static Dictionary<string, double> SegmentsLengths_Refactored(
             IEnumerable<Point> starts, IEnumerable<Point> ends)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return starts.SelectMany(
+                start => ends, (start, end) =>
+                new {
+                    Start = start,
+                    End = end,
+                    Length = SegmentLength(start, end)
+                })
+                .ToDictionary(
+                    segmentData =>
+                        $"Start: ({segmentData.Start})," +
+                        $" End: ({segmentData.End})",
+                    segmentData => segmentData.Length);
         }
 
         //do not modify this method

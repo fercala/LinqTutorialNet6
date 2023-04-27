@@ -28,8 +28,10 @@ namespace Exercises
         public static Dictionary<int, string> NewYearsEvesSince(
             int initialYear, int yearsCount)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return
+                Enumerable.Range(initialYear, yearsCount)
+                .ToDictionary(year => year,
+                year => new DateTime(year, 12, 31).DayOfWeek.ToString());
         }
 
         //Coding Exercise 2
@@ -53,16 +55,26 @@ namespace Exercises
          */
         public static string BuildTree(int levels)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            return string.Join(Environment.NewLine, Enumerable.Range(1, levels)
+                .Select(level =>
+                string.Join("", Enumerable.Repeat("*", level))));
         }
 
         //Refactoring challenge
         //TODO implement this method
         public static IEnumerable<string> DoubleLetters_Refactored(int countOfLetters)
         {
-            //TODO your code goes here
-            throw new NotImplementedException();
+            const int CountOfLettersInEnglishAlphabet = 26;
+            var finalCountOfLetters = Math.Min(
+                countOfLetters,
+                CountOfLettersInEnglishAlphabet);
+
+            var allLetters = Enumerable
+                .Range('A', finalCountOfLetters)
+                .Select(i => (char)i);
+
+            return allLetters.SelectMany(
+                letter => allLetters, (first, second) => $"{first}{second}");
         }
 
         //do not modify this method
